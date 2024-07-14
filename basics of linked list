@@ -1,0 +1,120 @@
+#include <iostream>
+using namespace std;
+
+//LINKED LIST BASICS:
+
+class node {
+public:
+    int val;
+    node* next;
+    node(int data) {
+        val = data;
+        next = NULL;
+    }
+};
+
+void insertathead(node*& head, int val) {
+    node* new_node = new node(val);
+    new_node->next = head;
+    head = new_node;
+}
+void insertattail(node* head, int val) {
+    node* n = new node(val);
+    node* temp = head;
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = n;
+}
+
+void insertatpos(node* head, int val, int pos) {
+    if (pos == 0) {
+        insertathead(head, val);
+        return;
+    }
+    node* n = new node(val);
+    node* temp = head;
+    int curr = 0;
+    while (curr != pos - 1) {
+        temp = temp->next;
+        curr = curr + 1;
+    }
+    n->next = temp->next;
+    temp->next = n;
+}
+
+void update(node* head, int pos, int val) {
+    node* temp = head;
+    int curr = 0;
+    while (curr != pos) {
+        temp = temp->next;
+        curr++;
+    }
+    temp->val = val;
+}
+
+void deleteathead(node*& head) {
+    node* temp = head;
+    head = head->next;
+    free(temp);
+}
+
+void deleteattail(node* head) {
+    node* sl = head;
+    while (sl->next->next != NULL) {
+        sl = sl->next;
+    }
+    node* temp = sl->next;
+    sl->next = NULL;
+    free(temp);
+}
+
+void deleteatpos(node* head, int pos) {
+    if (pos == 0) {
+        deleteathead(head);
+        return;
+    }
+    int curr = 0;
+    node* prev = head;
+    while (curr != pos - 1) {
+        prev = prev->next;
+        curr++;
+    }
+    node* temp = prev->next;
+    prev->next = prev->next->next;
+    free(temp);
+}
+
+void display(node* head) {
+    node* temp = head;
+    while (temp != NULL) {
+        cout << temp->val << " -> ";
+        temp = temp->next;
+    }
+    cout << "NULL" << endl;
+}
+int main() {
+
+    node* head = NULL;
+    insertathead(head, 2);
+    display(head);
+    insertathead(head, 1);
+    display(head);
+    insertattail(head, 3);
+    display(head);
+    insertatpos(head, 4, 2);
+    display(head);
+    update(head, 1, 5);
+    display(head);
+    deleteathead(head);
+    display(head);
+    deleteattail(head);
+    display(head);
+    insertattail(head, 6);
+    insertattail(head, 7);
+    display(head);
+    deleteatpos(head, 2);
+    display(head);
+
+    return 0;
+}
