@@ -1,0 +1,61 @@
+#include <iostream>
+using namespace std;
+
+// given the head of linked list , ,delete every alternate element from list starting from second element.
+class node {
+public:
+    int val;
+    node* next;
+    node(int data) {
+        val = data;
+        next = NULL;
+    }
+};
+class linkedlist {
+public:
+    node* head;
+    linkedlist() {
+        head = NULL;
+    }
+    void insertattail(int val) {
+        node* n = new node(val);
+        if (head == NULL) {
+            head = n;
+            return;
+        }
+        node* temp = head;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = n;
+    }
+    void display() {
+        node* temp = head;
+        while (temp != NULL) {
+            cout << temp->val << " -> ";
+            temp = temp->next;
+        }
+        cout << "NULL" << endl;
+    }
+};
+
+void deletealternatenode(node*& head) {
+    node* curr = head;
+    while (curr != NULL && curr->next != NULL) {
+        node* temp = curr->next;
+        curr->next = curr->next->next;
+        free(temp);
+        curr = curr->next;
+    }
+}
+int main() {
+    linkedlist ll;
+    for (int i = 0; i < 5; i++) {
+        ll.insertattail(i);
+    }
+    ll.display();
+    deletealternatenode(ll.head);
+    ll.display();
+
+    return 0;
+}
