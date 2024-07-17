@@ -37,7 +37,7 @@ public:
         }
         cout<<"NULL"<<endl;
     }
-    void deleteduplicatenodes(node * &head){
+    void deleteduplicatenodes(){
         node *curr = head;
         while (curr != NULL) { 
             while (curr->next && curr->val == curr->next->val) { //to check whether curr node has a next node and if val are equal
@@ -59,7 +59,7 @@ int main()
         ll.insertattail(a);
     }
     ll.display();
-    ll.deleteduplicatenodes(ll.head); 
+    ll.deleteduplicatenodes(); 
     ll.display();
 
     return 0;
