@@ -1,1 +1,160 @@
+#include <iostream>
+using namespace std;
 
+class node {
+public:
+    int val;
+    node* prev;
+    node* next;
+
+    node(int data) {
+        val = data;
+        prev = NULL;
+        next = NULL;
+    }
+};
+
+class doublylinkedlist {
+public:
+    node* head;
+    node* tail;
+    doublylinkedlist() {
+        head = NULL;
+        tail = NULL;
+    }
+
+    //adding a node at the start of dll:
+    void insertatstart(int val) {
+        node* new_node = new node(val);
+        if (head == NULL) {   //empty dll
+            head = new_node;
+            tail = new_node;
+            return;
+        }
+        new_node->next = head;
+        head->prev = new_node;
+        head = new_node;
+        return;
+    }
+
+    //displaying a dll
+    void display() {
+        if (head == NULL) {
+            cout << "List is empty" << endl;
+            return;
+        }
+
+        node* temp = head;
+        while (temp != NULL) {
+            cout << temp->val << "<->";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+
+
+    //adding a node at the end of dll
+    void insertatend(int val) {
+        node* new_node = new node(val);
+        if (tail == NULL) {      //empty dll
+            head = NULL;
+        }
+        tail->next = new_node;     //warning of dereferencing null pointer tail here
+        new_node->prev = tail;
+        tail = new_node;
+        return;
+    }
+
+    //adding a node at arbitrary position of dll:
+    void insertatpos(int val, int k) {
+        //assuming k is less than or equal to length of dll
+        node* temp = head;
+        int counter = 1;
+        while (counter < k) {
+            temp = temp->next;
+            counter++;
+        }
+        //temp will be pointing to node at (k-1)th posiion
+        node* new_node = new node(val);
+        new_node->next = temp->next;
+        temp->next = new_node;
+        new_node->prev = temp;
+        new_node->next->prev = new_node;
+        return;
+    }
+
+    //deleting a node at start of dll
+    void deleteatstart() {
+        if (head == NULL) return;   //empty dll
+        node* temp = head;
+        head = head->next;
+        if (head == NULL) {         //only one node
+            tail = NULL;
+        }
+        else {
+            head->prev = NULL;
+        }
+        free(temp);
+        return;
+    }
+
+    //delete a node at end of dll
+    void deleteatend() {
+        if (head == NULL) {
+            return;
+        }
+        node* temp = tail;
+        tail = tail->prev;
+        if (tail == NULL) {
+            head = NULL;
+        }
+        else {
+            tail->next = NULL;
+        }
+        free(temp);
+        return;
+    }
+
+    //delete a node at arbitrary position:
+    void deleteatpos(int k) {
+        node* temp = head;
+        int counter = 1;
+        while (counter < k) {
+            temp = temp->next;
+            counter++;
+        }
+        //now temp is pointing to kth position
+        temp->prev->next = temp->next;
+        temp->next->prev = temp->prev;
+        free(temp);
+        return;
+    }
+};
+
+int main()
+{
+    doublylinkedlist dll;
+ 
+    dll.insertatstart(2);
+    dll.insertatstart(1);
+    dll.display();
+
+    dll.insertatend(3);
+    dll.insertatend(4);
+    dll.insertatend(6);
+    dll.display();
+    
+    dll.insertatpos(5, 2);
+    dll.display();
+
+    dll.deleteatstart();
+    dll.display();
+
+    dll.deleteatend();
+    dll.display();
+
+    dll.deleteatpos(3);
+    dll.display();
+
+    return 0;
+}
