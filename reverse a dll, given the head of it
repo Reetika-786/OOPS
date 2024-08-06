@@ -1,1 +1,84 @@
+#include <iostream>
+using namespace std;
+
+class node {
+public:
+    int val;
+    node* prev;
+    node* next;
+
+    node(int data) {
+        val = data;
+        prev = NULL;
+        next = NULL;
+    }
+};
+
+class doublylinkedlist {
+public:
+    node* head;
+    node* tail;
+    doublylinkedlist() {
+        head = NULL;
+        tail = NULL;
+    }
+
+    void display() {
+        if (head == NULL) {
+            cout << "List is empty" << endl;
+            return;
+        }
+
+        node* temp = head;
+        while (temp != NULL) {
+            cout << temp->val << "<->";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+
+    void insertatend(int val) {
+        node* new_node = new node(val);
+        if (head == NULL) {
+            head = new_node;
+            tail = new_node;
+        } else {
+            tail->next = new_node;
+            new_node->prev = tail;
+            tail = new_node;
+        }
+    }
+
+    void reversedll(node*& head, node*& tail) {
+        if (head == NULL) {
+            return; // Empty list
+        }
+
+        node* curr = head;
+        while (curr != NULL) {
+            node* next = curr->next;
+            curr->next = curr->prev;
+            curr->prev = next;
+            curr = next;
+        }
+
+        // Swap head and tail
+        node* temp = head;
+        head = tail;
+        tail = temp;
+    }
+};
+
+int main() {
+    doublylinkedlist dll;
+
+    for (int i = 0; i < 6; i++) {
+        dll.insertatend(i);
+    }
+    dll.display();
+    dll.reversedll(dll.head, dll.tail);
+    dll.display();
+
+    return 0;
+}
 
