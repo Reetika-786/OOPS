@@ -38,34 +38,27 @@ public:
         cout << "NULL" << endl;
     }
     
-    bool detectcycle(node* head) {
-        node* slow = head;
-        node* fast = head;
-        while (fast && fast->next) {
-            slow = slow->next;
-            fast = fast->next->next;
-            if (slow == fast) {
-                cout << slow->val << endl;  //node where slow and fast ptrs meet
-                return true;
-            }
-        }
-        return false;
-    }
     bool ispalindrome(node* head) {
+       //find middle element
         node* slow = head;
         node* fast = head;
         while (fast && fast->next) {
             slow = slow->next;
             fast = fast->next;
         }
+
+        //break ll into 2 parts
         node* curr = slow->next;
         node* prev = slow;
         slow->next = NULL;
+
+    //reverse 2nd half of ll
         while (curr) {
             node* nextnode = curr->next;
             curr->next = prev;
             curr = nextnode;
         }
+    //compare both parts of ll
         node* head1 = head;
         node* head2 = prev;
         while (head2) {
