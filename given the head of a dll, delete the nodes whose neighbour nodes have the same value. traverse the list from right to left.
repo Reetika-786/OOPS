@@ -1,0 +1,79 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std;
+
+class node{
+    public:
+    int val;
+    node* prev;
+    node* next;
+    node(int data){
+        val = data;
+        prev = NULL;
+        next = NULL;
+    }
+};
+class dll{
+    public:
+    node* head;
+    node* tail;
+    dll(){
+        head = NULL;
+        tail = NULL;
+    }
+    
+    void insertattail(int val){
+        node* n = new node(val);
+        if(tail == NULL){
+            head=n;
+            tail=n;
+        }else{
+        tail->next = n;
+        n->prev = tail;
+        tail = n;
+        }
+    }
+    
+    void display(){
+        node* temp = head;
+        if(head==NULL){
+            cout<<"empty ll";
+            return;
+        }
+        while(temp != NULL){
+            cout<<temp->val<<" ";
+            temp = temp->next;
+        }
+        cout<<endl;
+    }
+    
+   void deletesameneighbournodes(node* &head, node* &tail){
+       node* currnode = tail->prev; //last 2nd node
+       while(currnode != head){
+           node* prevnode = currnode->prev;
+           node* nextnode = currnode->next;
+           if(prevnode -> val == nextnode->val){
+               prevnode->next = nextnode;
+               nextnode->prev = prevnode;
+               free(currnode);
+           }
+           currnode = prevnode;
+       }
+   }
+   
+};
+
+int main() {
+    dll dll1;
+    dll1.insertattail(2);
+    dll1.insertattail(1);
+    dll1.insertattail(1);
+    dll1.insertattail(2);
+    dll1.insertattail(1);
+    dll1.display();
+    dll1.deletesameneighbournodes(dll1.head, dll1.tail);
+    dll1.display();
+    
+
+    return 0;
+}
