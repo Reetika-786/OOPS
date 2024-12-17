@@ -57,7 +57,9 @@ public:
     void insertatend(int val) {
         node* new_node = new node(val);
         if (tail == NULL) {      //empty dll
-            head = NULL;
+            head = n;
+            tail = n;
+            return;
         }
         tail->next = new_node;     //warning of dereferencing null pointer tail here
         new_node->prev = tail;
