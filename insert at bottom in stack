@@ -1,1 +1,14 @@
-
+void insertAtBottom(stack <int> &st, int x){
+    stack <int> temp;
+    while(not st.empty()){
+        int curr = st.top();
+        st.pop(); 
+        temp.push(curr);
+    }
+    st.push(x);
+    while(not temp.empty()){
+        int curr = temp.top();
+        temp.pop();
+        st.push(curr);
+    }
+}
