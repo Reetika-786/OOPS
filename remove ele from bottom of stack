@@ -1,0 +1,10 @@
+void removeFromBottom(stack<int>&st){
+    if(st.size == 1){
+        st.pop();
+        return;
+    }
+    int curr = st.top();
+    st.pop();
+    removeFromBottom(st);
+    st.push(curr);
+}
