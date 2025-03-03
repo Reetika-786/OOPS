@@ -48,9 +48,14 @@ public:
         }
 
         //break ll into 2 parts
+    // **here, you can starting curr from slow->next, you can also start from slow itself(optimal)
         node* curr = slow->next;
         node* prev = slow;
         slow->next = NULL;
+
+//optimal approach for previous step:
+        // Node* curr = slow;  
+        // Node* prev = NULL;
 
     //reverse 2nd half of ll
         while (curr) {
