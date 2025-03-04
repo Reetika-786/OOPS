@@ -54,6 +54,8 @@ public:
         }
         return ptr;
     }
+
+//giving runtime of 38s at leetcode!
     node *getintersection(node* head1, node* head2){
         node *ptr1 = head1;
         node *ptr2 = head2;
